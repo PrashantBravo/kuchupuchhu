@@ -3,29 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Wait a Minute</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
       background: linear-gradient(to bottom right, #ffe6eb, #fff0f5);
       font-family: 'Poppins', sans-serif;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       text-align: center;
+      padding: 20px;
     }
 
     #text {
-      font-size: 18px;
+      font-size: 1.2rem;
       color: #b30059;
       margin-bottom: 30px;
       font-weight: 600;
       line-height: 1.6;
-      max-width: 90%;
+      max-width: 90vw;
     }
 
     .btn {
@@ -33,7 +38,7 @@
       margin: 10px;
       border: none;
       border-radius: 30px;
-      font-size: 16px;
+      font-size: 1rem;
       background-color: #ff4d88;
       color: white;
       font-weight: bold;
@@ -44,6 +49,28 @@
     .btn:hover {
       transform: scale(1.08);
       background-color: #e60073;
+    }
+
+    @media (max-width: 600px) {
+      #text {
+        font-size: 1rem;
+      }
+
+      .btn {
+        width: 80%;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-height: 500px) {
+      body {
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+
+      #text {
+        margin-bottom: 15px;
+      }
     }
   </style>
 </head>
@@ -66,7 +93,7 @@
     function no() {
       littleCount++;
       const littles = "little ".repeat(littleCount).trim();
-      document.getElementById("text").innerHTML = ` ${littles} bit???`;
+      document.getElementById("text").innerHTML = `${littles}bit???`;
     }
   </script>
 </body>
