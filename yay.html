@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wait a Minute</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -15,11 +15,11 @@
       padding: 0;
       background: linear-gradient(to bottom right, #ffe6eb, #fff0f5);
       font-family: 'Poppins', sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       text-align: center;
       padding: 20px;
     }
@@ -30,12 +30,15 @@
       margin-bottom: 30px;
       font-weight: 600;
       line-height: 1.6;
-      max-width: 90vw;
+      max-width: 100%;
+      word-break: break-word;
     }
 
     .btn {
-      padding: 12px 28px;
-      margin: 10px;
+      width: 90%;
+      max-width: 300px;
+      padding: 14px 20px;
+      margin: 10px auto;
       border: none;
       border-radius: 30px;
       font-size: 1rem;
@@ -47,29 +50,20 @@
     }
 
     .btn:hover {
-      transform: scale(1.08);
+      transform: scale(1.05);
       background-color: #e60073;
     }
 
-    @media (max-width: 600px) {
+    @media (min-width: 600px) {
       #text {
-        font-size: 1rem;
+        font-size: 1.4rem;
+        max-width: 70%;
       }
 
       .btn {
-        width: 80%;
-        font-size: 0.95rem;
-      }
-    }
-
-    @media (max-height: 500px) {
-      body {
-        flex-direction: column;
-        justify-content: space-evenly;
-      }
-
-      #text {
-        margin-bottom: 15px;
+        width: auto;
+        padding: 12px 28px;
+        font-size: 1rem;
       }
     }
   </style>
