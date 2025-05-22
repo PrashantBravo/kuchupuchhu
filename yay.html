@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wait a Minute</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #ffe6eb, #fff0f5);
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    #text {
+      font-size: 18px;
+      color: #b30059;
+      margin-bottom: 30px;
+      font-weight: 600;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      margin: 10px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      background-color: #ff4d88;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+      background-color: #e60073;
+    }
+  </style>
+</head>
+<body>
+  <div id="text">
+    Wait a minute...<br>
+    You’ve been doing what I say for a very long time...<br>
+    Do you love me or something???
+  </div>
+  <button class="btn" onclick="yes()">Yes</button>
+  <button class="btn" onclick="no()">No</button>
+
+  <script>
+    let littleCount = 0;
+
+    function yes() {
+      window.location.href = "yes.html";
+    }
+
+    function no() {
+      littleCount++;
+      const littles = "little ".repeat(littleCount).trim();
+      document.getElementById("text").innerHTML = ` ${littles} bit???`;
+    }
+  </script>
+</body>
+</html>

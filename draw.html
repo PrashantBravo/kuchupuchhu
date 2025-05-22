@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Draw a Heart</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: #ffe6ee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      color: #cc005f;
+    }
+
+    canvas {
+      background-color: #fff;
+      border: 2px solid #000;
+      touch-action: none;
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    .circle-btn {
+      width: 60px;
+      height: 60px;
+      margin: 10px 5px;
+      border-radius: 50%;
+      border: none;
+      font-size: 14px;
+      background-color: #ff99b3;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .circle-btn.active {
+      background-color: #e60073;
+    }
+
+    #message {
+      margin-top: 10px;
+      font-size: 22px;
+      color: green;
+      font-weight: bold;
+      display: none;
+    }
+
+    #yay-btn {
+      display: none;
+      margin-top: 5px;
+      font-size: 18px;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      background-color: #ff4d88;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 600px) {
+      canvas {
+        width: 90%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Draw a Heart</h1>
+    <canvas id="drawCanvas" width="300" height="300"></canvas>
+
+    <div class="buttons">
+      <button id="drawBtn" class="circle-btn active">Draw</button>
+      <button id="eraseBtn" class="circle-btn">Erase</button>
+      <button id="clearBtn" class="circle-btn">X</button>
+    </div>
+
+    <div id="message">Well done Moonyyy</div>
+   <button id="yay-btn" onclick="window.location.href='yay.html'">Yayaya</button>
+    
+  </div>
+
+  <script>
+    const canvas = document.getElementById("drawCanvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+    let isErasing = false;
+
+    let drawBtn = document.getElementById("drawBtn");
+    let eraseBtn = document.getElementById("eraseBtn");
+    let clearBtn = document.getElementById("clearBtn");
+    let message = document.getElementById("message");
+    let yayBtn = document.getElementById("yay-btn");
+
+    drawBtn.addEventListener("click", () => {
+      isErasing = false;
+      drawBtn.classList.add("active");
+      eraseBtn.classList.remove("active");
+    });
+
+    eraseBtn.addEventListener("click", () => {
+      isErasing = true;
+      eraseBtn.classList.add("active");
+      drawBtn.classList.remove("active");
+    });
+
+    clearBtn.addEventListener("click", () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      message.style.display = "none";
+      yayBtn.style.display = "none";
+    });
+
+    function startPosition(e) {
+      drawing = true;
+      draw(e);
+    }
+
+    function endPosition() {
+      drawing = false;
+      ctx.beginPath();
+      checkHeartDrawn();
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      ctx.lineWidth = 3;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = isErasing ? "#ffffff" : "red";
+
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+
+    function checkHeartDrawn() {
+      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let count = 0;
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        if (
+          imageData.data[i] === 255 && // red
+          imageData.data[i + 1] === 0 &&
+          imageData.data[i + 2] === 0
+        ) {
+          count++;
+        }
+      }
+      if (count > 1500) {
+        message.style.display = "block";
+        yayBtn.style.display = "inline-block";
+      }
+    }
+
+    canvas.addEventListener("mousedown", startPosition);
+    canvas.addEventListener("mouseup", endPosition);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("touchstart", startPosition);
+    canvas.addEventListener("touchend", endPosition);
+    canvas.addEventListener("touchmove", draw);
+  </script>
+</body>
+</html>

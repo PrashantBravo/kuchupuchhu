@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Cake</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #ffe0e9, #ffc3d1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    .cake-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.8);
+    }
+
+    .layer {
+      width: 200px;
+      height: 60px;
+      border-radius: 50% / 20%;
+      margin-top: -30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+      opacity: 0;
+      animation: popIn 0.6s ease-out forwards;
+    }
+
+    .layer:nth-child(1) {
+      background: #ffc0cb;
+      z-index: 3;
+      animation-delay: 0.3s;
+    }
+    .layer:nth-child(3) {
+      background: #ff7f9f;
+      z-index: 2;
+      animation-delay: 0.6s;
+    }
+    .layer:nth-child(4) {
+      background: #e75480;
+      z-index: 1;
+      animation-delay: 0.9s;
+      margin-bottom: 30px;
+    }
+
+    @keyframes popIn {
+      0% {opacity: 0; transform: scale(0.5);}
+      50% {opacity: 1; transform: scale(1.1);}
+      100% {opacity: 1; transform: scale(1);}
+    }
+
+    .candle {
+      width: 8px;
+      height: 40px;
+      background: #8b0000;
+      border-radius: 4px;
+      position: absolute;
+      top: -65px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: fade-in 1s ease forwards;
+      animation-delay: 1.2s;
+      opacity: 0;
+    }
+
+    .flame {
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle, #ffeb3b, #ffa000);
+      border-radius: 50%;
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: flicker 0.5s infinite alternate;
+    }
+
+    @keyframes flicker {
+      from { transform: translateX(-50%) scale(1); opacity: 0.9; }
+      to { transform: translateX(-50%) scale(1.2); opacity: 1; }
+    }
+
+    .button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #ff4f81;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      opacity: 0;
+      animation: fade-in 1s ease forwards;
+      animation-delay: 2s;
+    }
+
+    @keyframes fade-in {
+      to { opacity: 1; }
+    }
+
+    .message {
+      position: absolute;
+      top: -180px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      font-family: 'Pacifico', cursive;
+      font-size: 2.2rem; /* Increased from 1.5rem */
+      color: #e91e63;
+      opacity: 0;
+      text-align: center;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .show-message {
+      animation: float-in 2s ease forwards;
+    }
+
+    @keyframes float-in {
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-10px) rotate(-2deg);
+      }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 6px 2px #fff;
+      animation: sparkle 1.5s infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+  #giftBtn {
+  background: #4CAF50; /* Green shade for contrast */
+  transition: background 0.3s ease;
+}
+#giftBtn:hover {
+  background: #45a049;
+}
+  </style>
+</head>
+<body>
+  <div class="cake-container" id="cake">
+    <div class="layer"></div>
+    <div class="candle" id="candle">
+      <div class="flame" id="flame"></div>
+    </div>
+    <div class="layer"></div>
+    <div class="layer"></div>
+    <button class="button" id="blowBtn">Blow the Candle</button>
+    <button class="button" id="giftBtn" style="display: none;" onclick="location.href='draw.html'">Unlock Your Gift</button>
+    <div class="message" id="message">Happy Birthday<br>My Kucchu Pucchu</div>
+  </div>
+
+  <script>
+    const btn = document.getElementById('blowBtn');
+    const flame = document.getElementById('flame');
+    const msg = document.getElementById('message');
+    const giftBtn = document.getElementById('giftBtn');
+
+    btn.addEventListener('click', () => {
+      flame.style.display = 'none';
+      msg.classList.add('show-message');
+      btn.style.display = 'none';
+      giftBtn.style.display = 'block';
+      addSparkles();
+    });
+
+    function addSparkles() {
+      const sparkleCount = window.innerWidth < 500 ? 60 : 100;
+      for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.top = `${Math.random() * window.innerHeight}px`;
+        sparkle.style.left = `${Math.random() * window.innerWidth}px`;
+        sparkle.style.animationDelay = `${Math.random()}s`;
+        sparkle.style.animationDuration = `${1 + Math.random()}s`;
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 3000);
+      }
+    }
+  </script>
+</body>
+</html>
